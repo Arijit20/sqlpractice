@@ -1,0 +1,65 @@
+UC1
+
+CREATE DATABASE addressbook_service; 
+USE addressbook_service; 
+SELECT DATABASE(); 
+
+UC2
+ CREATE TABLE addressbook(                                                                                           
+ -> first_name  VARCHAR(50) NOT NULL,                                                                                    
+ -> last_name   VARCHAR(50) NOT NULL,                                                                                     
+ -> address     VARCHAR(50) NOT NULL,                                                                                       
+ -> city        VARCHAR(50) NOT NULL,                                                                                          
+ -> state       VARCHAR(50) NOT NULL,                                                                                         
+ -> zip         INT unsigned NOT NULL,                                                                                            
+ -> phone       INT NOT NULL,                                                                                         
+ -> email       VARCHAR(50) NOT NULL                                                                                          
+ -> ); 
+DESCRIBE addressbook; 
+
+
+UC3
+ INSERT INTO addressbook VALUES 
+('arijit','dey','sector 1','kolkata','wb','123456','1478575847','arijit@gmail.com'),
+('partha','pal','sector 2','noida','up','741147','7858585858','partha@gmail.com'), 
+('souvik','roy','sector 2','noida','up','741147','9898989898','souvik@gmail.com'), 
+('raja','ghosh','sector 3','bangalore','karnataka','789789','8787874858','raja@gmail.com'), 
+('shyam','tripathi','sector 4','a','b','7458','7858','s@gmail.com'); 
+
+
+
+UC4
+UPDATE addressbook SET city = 'chennai' WHERE first_name = 'shyam'; 
+
+
+UC5
+DELETE FROM addressbook WHERE first_name = 'shyam'; 
+
+
+UC6
+SELECT * FROM addressbook WHERE city = 'noida'; 
+SELECT * FROM addressbook WHERE state = 'up'; 
+
+
+UC7
+SELECT city,COUNT(city) FROM addressbook GROUP BY city; 
+SELECT state,COUNT(state) FROM addressbook GROUP BY state;
+
+
+UC8
+SELECT * FROM addressbook WHERE city = 'noida' ORDER BY first_name; 
+
+
+UC9
+ALTER TABLE addressbook ADD name VARCHAR(50); 
+ALTER TABLE addressbook ADD type VARCHAR(50); 
+
+
+UC10
+INSERT INTO addressbook VALUES ('amit','majumdar','sector 4','bangalore','karnataka','565656','8959658585','amit@gmail.com', NULL, 'Friend'); 
+SELECT type, COUNT(type) FROM addressbook GROUP BY type; 
+
+UC11
+INSERT INTO addressbook VALUES                 
+-> ('abhik','biswas','sector 6','chennai','tamilnadu','741478','9856858585','abhik@gmail.com',NULL,'Friend'),                           
+-> ('subho','mallick','sector 1','kolkata','wb','785858','8959854578','subho@gmail.com', NULL,'Family'); 
