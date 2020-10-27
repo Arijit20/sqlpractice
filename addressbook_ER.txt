@@ -1,0 +1,120 @@
+CREATE TABLE addressbook_main(
+addressbook_name   VARCHAR(200) NOT NULL,
+type               VARCHAR(200) NOT NULL,
+PRIMARY KEY        (addressbook_name)
+);
+
+Query OK, 0 rows affected (1.1461 sec) 
+
+INSERT INTO addressbook_main VALUES
+('book1','Family'),
+('book2','Office'),
+('book3','Friends');
+
+
+Query OK, 3 rows affected (0.1533 sec) 
+Records: 3  Duplicates: 0  Warnings: 0 
+
+CREATE TABLE address_book(
+person_id          INT NOT NULL,
+addressbook_name   VARCHAR(200) REFERENCES addressbook_main(addressbook_name),
+first_name         VARCHAR(200) NOT NULL,
+last_name          VARCHAR(200) NOT NULL,
+PRIMARY KEY        (person_id)
+);
+
+Query OK, 0 rows affected (1.3393 sec) 
+
+INSERT INTO address_book VALUES
+(1,'book1','arijit','dey'),
+(2,'book1','a','dey'),
+(3,'book2','b','pal'),
+(4,'book2','c','ghosh'),
+(5,'book3','d','palit'),
+(6,'book3','e','sarkar');
+
+Query OK, 6 rows affected (0.2092 sec) 
+Records: 6  Duplicates: 0  Warnings: 0 
+
+CREATE TABLE contact_details(
+person_id           INT REFERENCES  address_book(person_id),
+phone_number        VARCHAR(200) NOT NULL,
+email               VARCHAR(200) NOT NULL
+);
+
+Query OK, 0 rows affected (1.4028 sec) 
+
+INSERT INTO contact_details VALUES      
+(1,'874','arijit@gmail.com'),
+(2,'854','a@gmail.com'),
+(3,'789','b@gmail.com'),
+(4,'741','c@gmail.com'),
+(5,'753','d@gmail.com'),
+(6,'456','e1@gmail.com'),
+(6,'456','e2@gmail.com');
+
+Query OK, 7 rows affected (0.2155 sec)    
+Records: 7  Duplicates: 0  Warnings: 0  
+
+CREATE TABLE address(
+person_id    INT REFERENCES address_book(person_id),
+street       VARCHAR(200) NOT NULL,
+city  VARCHAR(200) NOT NULL,
+state  VARCHAR(200) NOT NULL,
+zip  INT NOT NULL); 
+
+Query OK, 0 rows affected (1.1964 sec) 
+
+INSERT INTO address VALUES
+(1,'a','b','c','748'),
+(2,'d','e','f','798'),
+(3,'a','b','c','456'),
+(4,'h','i','j','123'),
+(5,'d','e','f','489'),
+(6,'w','x','y','852');  
+
+Query OK, 6 rows affected (0.2485 sec)
+Records: 6  Duplicates: 0  Warnings: 0  
+
+QUERY of UC6
+
+SELECT * FROM address_book WHERE person_id IN(SELECT person_id FROM address WHERE city = 'x');
+
++-----------+------------------+------------+-----------+
+| person_id | addressbook_name | first_name | last_name |
++-----------+------------------+------------+-----------+
+|         6 | Office           | e          | sarkar    |
++-----------+------------------+------------+-----------+
+1 row in set (0.0503 sec) 
+
+SELECT * FROM address_book WHERE person_id IN(SELECT person_id FROM address WHERE state = 'y');
+
++-----------+------------------+------------+-----------+
+| person_id | addressbook_name | first_name | last_name |
++-----------+------------------+------------+-----------+
+|         6 | Office           | e          | sarkar    |
++-----------+------------------+------------+-----------+
+1 row in set (0.0009 sec)
+
+QUERY of UC7
+
+SELECT COUNT(person_id) FROM address_book WHERE person_id IN(SELECT person_id FROM address WHERE city ='b');
+
++------------------+
+| COUNT(person_id) |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.0453 sec) 
+
+SELECT COUNT(person_id) FROM address_book WHERE person_id IN(SELECT person_id FROM address WHERE state ='c');
+
++------------------+
+| COUNT(person_id) |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.0257 sec)
+
+
+
