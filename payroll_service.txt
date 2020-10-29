@@ -180,4 +180,12 @@ INSERT INTO employee_department VALUES
 Query OK, 4 rows affected (0.2067 sec) 
 Records: 4  Duplicates: 0  Warnings: 0 
 
+Query of UC4
+
+SELECT basic_pay FROM payroll p , employee e WHERE                                                                                                                   -> e.id = p.id AND E.name = 'Bill'; 
++-----------+                                                                                                                                                           | basic_pay |                                                                                                                                                           +-----------+                                                                                                                                                           |      5000 |                                                                                                                                                           +-----------+                                                                                                                                                           1 row in set (0.1479 sec) 
+
+Query of UC5
+
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
